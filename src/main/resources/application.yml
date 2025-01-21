@@ -29,3 +29,8 @@ spring:
     prefix: ${PREFIX}
     accessExp: ${ACCESS_EXP}
     refreshExp: ${REFRESH_EXP}
+
+  data:
+    redis:
+      port: ${REDIS_PORT}
+      host: ${REDIS_HOST}
