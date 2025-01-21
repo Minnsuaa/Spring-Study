@@ -52,8 +52,8 @@ public class JwtTokenProvider {
     }
 
     public String parseToken(String bearerToken) {
-        if (bearerToken != null && bearerToken.startsWith(jwtProperties.getHeader())) {
-            return parseToken(bearerToken);
+        if (bearerToken != null && bearerToken.startsWith(jwtProperties.getPrefix())) {
+            return bearerToken.replace(jwtProperties.getPrefix(), "").trim();
         }
         return null;
     }
