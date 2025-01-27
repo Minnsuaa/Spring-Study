@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
 
 @Component
@@ -25,9 +26,11 @@ public class JwtTokenProvider {
     private final AuthDetailsService authDetailsService;
     private final RefreshTokenRepository refreshTokenRepository;
 
+    private final SecretKeySpec secretKeySpec = new SecretKeySpec(jwtProperties.getSecretKey().getBytes(), SignatureAlgorithm.HS256.getJcaName());
+
     public String generateToken(String accountId, String type, Long exp) {
         return Jwts.builder()
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
+                .signWith(secretKeySpec)
                 .setSubject(accountId)
                 .setHeaderParam("type", type)
                 .setIssuedAt(new Date())
@@ -66,7 +69,7 @@ public class JwtTokenProvider {
     private Claims getTokenBody(String token) {
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(jwtProperties.getSecretKey())
+                    .setSigningKey(secretKeySpec)
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
