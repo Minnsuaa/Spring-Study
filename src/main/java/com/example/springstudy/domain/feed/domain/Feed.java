@@ -1,8 +1,11 @@
 package com.example.springstudy.domain.feed.domain;
 
+import com.example.springstudy.domain.feed.presentation.dto.request.FeedRequest;
 import com.example.springstudy.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.ZonedDateTime;
 
 @Entity
 @Getter
@@ -23,8 +26,29 @@ public class Feed {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @Column(nullable = false, updatable = false)
+    private ZonedDateTime createdAt;
+
+    private ZonedDateTime updatedAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = ZonedDateTime.now();
+        this.updatedAt = ZonedDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = ZonedDateTime.now();
+    }
+
+    public void update(FeedRequest request) {
+        this.title = request.getTitle();
+        this.content = request.getContent();
+    }
 
 }
