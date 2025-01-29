@@ -18,7 +18,12 @@ public enum ErrorCode {
     EXPIRED_JWT(401, "Expired JWT"),
     INVALID_JWT(401, "Invalid JWT"),
     INVALID_REFRESH_TOKEN(401, "Invalid Refresh Token"),
-    REFRESH_TOKEN_NOT_FOUND(404, "Refresh token Not Found");
+    REFRESH_TOKEN_NOT_FOUND(404, "Refresh token Not Found"),
+
+    // feed
+    FEED_NOT_FOUND(404, "Feed Not Found"),
+    CANNOT_DELETE_FEED(403, "Can't Delete Feed"),
+    CANNOT_MODIFY_FEED(403, "Can't Modify Feed");
 
     private final int status;
     private final String message;
