@@ -2,14 +2,13 @@ package com.example.springstudy.domain.feed.presentation;
 
 import com.example.springstudy.domain.feed.presentation.dto.request.FeedRequest;
 import com.example.springstudy.domain.feed.presentation.dto.response.FeedResponse;
-import com.example.springstudy.domain.feed.service.CreateFeedService;
-import com.example.springstudy.domain.feed.service.DeleteFeedService;
-import com.example.springstudy.domain.feed.service.QueryFeedService;
-import com.example.springstudy.domain.feed.service.UpdateFeedService;
+import com.example.springstudy.domain.feed.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/feed")
@@ -20,6 +19,7 @@ public class FeedController {
     private final DeleteFeedService deleteFeedService;
     private final UpdateFeedService updateFeedService;
     private final QueryFeedService queryFeedService;
+    private final QueryFeedListService queryFeedListService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -41,6 +41,11 @@ public class FeedController {
     @GetMapping("/{feed-id}")
     public FeedResponse getFeed(@PathVariable("feed-id") Long feedId) {
         return queryFeedService.getFeed(feedId);
+    }
+
+    @GetMapping
+    public List<FeedResponse> getFeedList() {
+        return queryFeedListService.getFeedList();
     }
 
 }
