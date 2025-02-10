@@ -5,6 +5,5 @@ import lombok.Builder;
 import java.time.ZonedDateTime;
 
 @Builder
-public record TokenResponse(String accessToken, ZonedDateTime accessExpiredAt,
-                            String refreshToken, ZonedDateTime refreshExpiredAt) {
+public record TokenResponse(String accessToken, ZonedDateTime accessExpiredAt, String refreshToken, ZonedDateTime refreshExpiredAt) {
 }
