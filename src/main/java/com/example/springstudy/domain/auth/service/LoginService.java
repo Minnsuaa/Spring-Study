@@ -34,16 +34,12 @@ public class LoginService {
             throw PasswordMisMatchException.EXCEPTION;
         }
 
-        String accessToken = jwtTokenProvider.generateAccessToken(request.getAccountId());
-        String refreshToken = jwtTokenProvider.generateRefreshToken(request.getAccountId());
-        ZonedDateTime accessExpiredAt = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).plusSeconds(jwtProperties.getAccessExp());
-        ZonedDateTime refreshExpiredAt = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).plusSeconds(jwtProperties.getRefreshExp());
-
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
         return TokenResponse.builder()
-                .accessToken(accessToken)
-                .accessExpiredAt(accessExpiredAt)
-                .refreshToken(refreshToken)
-                .refreshExpiredAt(refreshExpiredAt)
+                .accessToken(jwtTokenProvider.generateAccessToken(request.getAccountId()))
+                .accessExpiredAt(now.plusSeconds(jwtProperties.getAccessExp()))
+                .refreshToken(jwtTokenProvider.generateRefreshToken(request.getAccountId()))
+                .refreshExpiredAt(now.plusSeconds(jwtProperties.getRefreshExp()))
                 .build();
     }
 

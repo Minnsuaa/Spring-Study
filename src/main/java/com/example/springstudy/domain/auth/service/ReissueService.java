@@ -26,8 +26,11 @@ public class ReissueService {
     @Transactional
     public TokenResponse reissue(HttpServletRequest request) {
         String refreshToken = request.getHeader("Authorization");
-        String parseToken = jwtTokenProvider.parseToken(refreshToken);
+        if (refreshToken == null) {
+            throw InvalidRefreshTokenException.EXCEPTION;
+        }
 
+        String parseToken = jwtTokenProvider.parseToken(refreshToken);
         if (parseToken == null) {
             throw InvalidRefreshTokenException.EXCEPTION;
         }
@@ -35,18 +38,15 @@ public class ReissueService {
         RefreshToken redisRefreshToken = refreshTokenRepository.findByRefreshToken(parseToken)
                 .orElseThrow(() -> RefreshTokenNotFoundException.EXCEPTION);
 
-        String newRefreshToken = jwtTokenProvider.generateRefreshToken(redisRefreshToken.getAccountId());
-        redisRefreshToken.updateToken(newRefreshToken, jwtProperties.getRefreshExp());
+        String accountId = redisRefreshToken.getAccountId();
+        refreshTokenRepository.delete(redisRefreshToken);
 
-        String newAccessToken = jwtTokenProvider.generateAccessToken(redisRefreshToken.getAccountId());
-        ZonedDateTime accessExpiredAt = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).plusSeconds(jwtProperties.getAccessExp());
-        ZonedDateTime refreshExpiredAt = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).plusSeconds(jwtProperties.getRefreshExp());
-
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
         return TokenResponse.builder()
-                .accessToken(newAccessToken)
-                .accessExpiredAt(accessExpiredAt)
-                .refreshToken(newRefreshToken)
-                .refreshExpiredAt(refreshExpiredAt)
+                .accessToken(jwtTokenProvider.generateAccessToken(accountId))
+                .accessExpiredAt(now.plusSeconds(jwtProperties.getAccessExp()))
+                .refreshToken(jwtTokenProvider.generateRefreshToken(accountId))
+                .refreshExpiredAt(now.plusSeconds(jwtProperties.getRefreshExp()))
                 .build();
     }
 
