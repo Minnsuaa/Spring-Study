@@ -23,7 +23,12 @@ public enum ErrorCode {
     // feed
     FEED_NOT_FOUND(404, "Feed Not Found"),
     CANNOT_DELETE_FEED(403, "Can't Delete Feed"),
-    CANNOT_MODIFY_FEED(403, "Can't Modify Feed");
+    CANNOT_MODIFY_FEED(403, "Can't Modify Feed"),
+
+    // comment
+    COMMENT_NOT_FOUND(404, "Comment Not Found"),
+    CANNOT_DELETE_COMMENT(403, "Can't Delete Comment"),
+    CANNOT_MODIFY_COMMENT(403, "Can't Modify Comment");
 
     private final int status;
     private final String message;
