@@ -36,13 +36,13 @@ public class Feed {
     private User user;
 
     @PrePersist
-    public void prePersist() {
+    private void prePersist() {
         this.createdAt = ZonedDateTime.now();
         this.updatedAt = ZonedDateTime.now();
     }
 
     @PreUpdate
-    public void preUpdate() {
+    private void preUpdate() {
         this.updatedAt = ZonedDateTime.now();
     }
 
