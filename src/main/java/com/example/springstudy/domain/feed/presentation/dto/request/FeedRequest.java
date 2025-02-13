@@ -2,11 +2,12 @@ package com.example.springstudy.domain.feed.presentation.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FeedRequest {
 
     @NotBlank(message = "제목을 입력해주세요.")
