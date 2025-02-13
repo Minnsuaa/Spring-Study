@@ -3,8 +3,7 @@ package com.example.springstudy.domain.comment.service;
 import com.example.springstudy.domain.comment.domain.Comment;
 import com.example.springstudy.domain.comment.exception.CannotModifyCommentException;
 import com.example.springstudy.domain.comment.facade.CommentFacade;
-import com.example.springstudy.domain.comment.presentation.dto.request.UpdateCommentRequest;
-import com.example.springstudy.domain.feed.exception.FeedNotFoundException;
+import com.example.springstudy.domain.comment.presentation.dto.request.CommentRequest;
 import com.example.springstudy.domain.user.domain.User;
 import com.example.springstudy.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +18,9 @@ public class UpdateCommentService {
     private final CommentFacade commentFacade;
 
     @Transactional
-    public void updateComment(UpdateCommentRequest request) {
+    public void updateComment(Long commentId, CommentRequest request) {
         User user = userFacade.getCurrentUser();
-        Comment comment = commentFacade.getComment(request.getCommentId());
-
-        if (!request.getFeedId().equals(comment.getFeed().getId())) {
-            throw FeedNotFoundException.EXCEPTION;
-        }
+        Comment comment = commentFacade.getComment(commentId);
 
         if (!user.getId().equals(comment.getUser().getId())) {
             throw CannotModifyCommentException.EXCEPTION;

@@ -2,7 +2,7 @@ package com.example.springstudy.domain.comment.service;
 
 import com.example.springstudy.domain.comment.domain.Comment;
 import com.example.springstudy.domain.comment.domain.repository.CommentRepository;
-import com.example.springstudy.domain.comment.presentation.dto.request.CreateCommentRequest;
+import com.example.springstudy.domain.comment.presentation.dto.request.CommentRequest;
 import com.example.springstudy.domain.feed.domain.Feed;
 import com.example.springstudy.domain.feed.facade.FeedFacade;
 import com.example.springstudy.domain.user.domain.User;
@@ -20,9 +20,9 @@ public class CreateCommentService {
     private final FeedFacade feedFacade;
 
     @Transactional
-    public void createComment(CreateCommentRequest request) {
+    public void createComment(Long feedId, CommentRequest request) {
         User user = userFacade.getCurrentUser();
-        Feed feed = feedFacade.getFeed(request.getFeedId());
+        Feed feed = feedFacade.getFeed(feedId);
 
         commentRepository.save(Comment.builder()
                         .comment(request.getComment())
