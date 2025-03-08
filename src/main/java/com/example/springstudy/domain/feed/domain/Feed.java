@@ -4,6 +4,7 @@ import com.example.springstudy.domain.feed.presentation.dto.request.FeedRequest;
 import com.example.springstudy.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.ZonedDateTime;
 
@@ -35,6 +36,9 @@ public class Feed {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(nullable = false)
+    private Integer likeCount;
+
     @PrePersist
     private void prePersist() {
         this.createdAt = ZonedDateTime.now();
@@ -51,4 +55,8 @@ public class Feed {
         this.content = request.getContent();
     }
 
+    public void plusLike() {
+        this.likeCount += 1;
+    }
+    
 }
