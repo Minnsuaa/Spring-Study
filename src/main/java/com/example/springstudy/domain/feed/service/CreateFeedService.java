@@ -23,6 +23,7 @@ public class CreateFeedService {
         feedRepository.save(Feed.builder()
                 .title(request.getTitle())
                 .content(request.getContent())
+                .likeCount(0)
                 .user(user)
                 .build());
     }
