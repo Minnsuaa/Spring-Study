@@ -29,7 +29,11 @@ public enum ErrorCode {
     // comment
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Comment Not Found"),
     CANNOT_DELETE_COMMENT(HttpStatus.FORBIDDEN, "Can't Delete Comment"),
-    CANNOT_MODIFY_COMMENT(HttpStatus.FORBIDDEN, "Can't Modify Comment");
+    CANNOT_MODIFY_COMMENT(HttpStatus.FORBIDDEN, "Can't Modify Comment"),
+
+    // like
+    LIKE_ALREADY_EXISTS(HttpStatus.CONFLICT, "Like Already Exists"),
+    LIKE_NOT_FOUND(HttpStatus.NOT_FOUND, "Like Not Found");
 
     private final HttpStatus status;
     private final String message;
