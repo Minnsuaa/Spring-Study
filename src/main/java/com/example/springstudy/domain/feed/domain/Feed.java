@@ -58,5 +58,9 @@ public class Feed {
     public void plusLike() {
         this.likeCount += 1;
     }
-    
+
+    public void minusLike() {
+        this.likeCount -= 1;
+    }
+
 }
