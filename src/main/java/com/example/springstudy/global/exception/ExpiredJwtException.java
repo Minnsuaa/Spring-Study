@@ -1,7 +1,7 @@
 package com.example.springstudy.global.exception;
 
-import com.example.springstudy.global.error.CustomException;
-import com.example.springstudy.global.error.ErrorCode;
+import com.example.springstudy.global.error.exception.CustomException;
+import com.example.springstudy.global.error.exception.ErrorCode;
 
 public class ExpiredJwtException extends CustomException {
 

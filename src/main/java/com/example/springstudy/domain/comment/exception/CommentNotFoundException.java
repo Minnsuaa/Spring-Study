@@ -1,7 +1,7 @@
 package com.example.springstudy.domain.comment.exception;
 
-import com.example.springstudy.global.error.CustomException;
-import com.example.springstudy.global.error.ErrorCode;
+import com.example.springstudy.global.error.exception.CustomException;
+import com.example.springstudy.global.error.exception.ErrorCode;
 
 public class CommentNotFoundException extends CustomException {
 

@@ -1,7 +1,7 @@
 package com.example.springstudy.domain.feed.exception;
 
-import com.example.springstudy.global.error.CustomException;
-import com.example.springstudy.global.error.ErrorCode;
+import com.example.springstudy.global.error.exception.CustomException;
+import com.example.springstudy.global.error.exception.ErrorCode;
 
 public class FeedNotFoundException extends CustomException {
 

@@ -1,4 +1,4 @@
-package com.example.springstudy.global.error;
+package com.example.springstudy.global.error.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
