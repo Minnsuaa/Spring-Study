@@ -3,11 +3,10 @@ package com.example.springstudy.domain.like.service;
 import com.example.springstudy.domain.feed.domain.Feed;
 import com.example.springstudy.domain.feed.facade.FeedFacade;
 import com.example.springstudy.domain.like.domain.repository.LikeRepository;
+import com.example.springstudy.domain.like.exception.LikeNotFoundException;
 import com.example.springstudy.domain.like.facade.LikeFacade;
 import com.example.springstudy.domain.user.domain.User;
 import com.example.springstudy.domain.user.facade.UserFacade;
-import com.example.springstudy.global.error.exception.CustomException;
-import com.example.springstudy.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +26,7 @@ public class UnLikeService {
         Feed feed = feedFacade.getFeed(feedId);
 
         if (!likeFacade.checkLike(user, feed)) {
-            throw new CustomException(ErrorCode.LIKE_NOT_FOUND);
+            throw LikeNotFoundException.EXCEPTION;
         }
 
         likeRepository.deleteLikeByUserAndFeed(user, feed);

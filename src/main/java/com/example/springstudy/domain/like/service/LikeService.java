@@ -4,11 +4,10 @@ import com.example.springstudy.domain.feed.domain.Feed;
 import com.example.springstudy.domain.feed.facade.FeedFacade;
 import com.example.springstudy.domain.like.domain.Like;
 import com.example.springstudy.domain.like.domain.repository.LikeRepository;
+import com.example.springstudy.domain.like.exception.LikeAlreadyExistsException;
 import com.example.springstudy.domain.like.facade.LikeFacade;
 import com.example.springstudy.domain.user.domain.User;
 import com.example.springstudy.domain.user.facade.UserFacade;
-import com.example.springstudy.global.error.exception.CustomException;
-import com.example.springstudy.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,12 +27,12 @@ public class LikeService {
         Feed feed = feedFacade.getFeed(feedId);
 
         if (likeFacade.checkLike(user, feed)) {
-            throw new CustomException(ErrorCode.LIKE_ALREADY_EXISTS);
+            throw LikeAlreadyExistsException.EXCEPTION;
         }
 
         likeRepository.save(Like.builder()
-                .user(user)
-                .feed(feed)
+            .user(user)
+            .feed(feed)
             .build());
 
         feed.plusLike();
