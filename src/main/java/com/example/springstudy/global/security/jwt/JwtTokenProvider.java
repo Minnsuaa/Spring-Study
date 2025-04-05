@@ -36,12 +36,12 @@ public class JwtTokenProvider {
 
     public String generateToken(String accountId, String type, Long exp) {
         return Jwts.builder()
-                .signWith(secretKeySpec)
-                .setSubject(accountId)
-                .setHeaderParam("type", type)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + exp * 1000))
-                .compact();
+            .signWith(secretKeySpec)
+            .setSubject(accountId)
+            .setHeaderParam("type", type)
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + exp * 1000))
+            .compact();
     }
 
     public String generateAccessToken(String accountId) {
@@ -52,10 +52,10 @@ public class JwtTokenProvider {
         String refreshToken = generateToken(accountId, "refresh", jwtProperties.getRefreshExp());
 
         refreshTokenRepository.save(RefreshToken.builder()
-                .accountId(accountId)
-                .refreshToken(refreshToken)
-                .ttl(jwtProperties.getRefreshExp())
-                .build());
+            .accountId(accountId)
+            .refreshToken(refreshToken)
+            .ttl(jwtProperties.getRefreshExp())
+            .build());
 
         return refreshToken;
     }
@@ -75,10 +75,10 @@ public class JwtTokenProvider {
     private Claims getTokenBody(String token) {
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(secretKeySpec)
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+                .setSigningKey(secretKeySpec)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
         } catch (io.jsonwebtoken.ExpiredJwtException e) {
             throw ExpiredJwtException.EXCEPTION;
         } catch (Exception e) {
