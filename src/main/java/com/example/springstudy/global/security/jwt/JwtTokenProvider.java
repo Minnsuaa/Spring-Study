@@ -8,9 +8,7 @@ import com.example.springstudy.global.security.auth.AuthDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,17 +18,17 @@ import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
 
 @Component
-@RequiredArgsConstructor
 public class JwtTokenProvider {
 
     private final JwtProperties jwtProperties;
     private final AuthDetailsService authDetailsService;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final SecretKeySpec secretKeySpec;
 
-    private SecretKeySpec secretKeySpec;
-
-    @PostConstruct
-    public void initSecretKeySpec() {
+    public JwtTokenProvider(JwtProperties jwtProperties, AuthDetailsService authDetailsService, RefreshTokenRepository refreshTokenRepository) {
+        this.jwtProperties = jwtProperties;
+        this.authDetailsService = authDetailsService;
+        this.refreshTokenRepository = refreshTokenRepository;
         this.secretKeySpec = new SecretKeySpec(jwtProperties.getSecretKey().getBytes(), SignatureAlgorithm.HS256.getJcaName());
     }
 
