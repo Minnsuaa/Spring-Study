@@ -21,9 +21,9 @@ public class GlobalExceptionHandler {
         final ErrorCode errorCode = e.getErrorCode();
         return new ResponseEntity<>(
                 ErrorResponse.builder()
-                        .status(errorCode.getStatus())
-                        .message(errorCode.getMessage())
-                        .build(),
+                    .status(errorCode.getStatus())
+                    .message(errorCode.getMessage())
+                    .build(),
                 HttpStatus.valueOf(errorCode.getStatus().value())
         );
     }
