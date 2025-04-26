@@ -27,20 +27,20 @@ public class LoginService {
 
     @Transactional(readOnly = true)
     public TokenResponse login(AuthRequest request) {
-        User user = userRepository.findByAccountId(request.getAccountId())
+        User user = userRepository.findByAccountId(request.accountId())
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
-        if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
+        if(!passwordEncoder.matches(request.password(), user.getPassword())){
             throw PasswordMisMatchException.EXCEPTION;
         }
 
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
         return TokenResponse.builder()
-                .accessToken(jwtTokenProvider.generateAccessToken(request.getAccountId()))
+                .accessToken(jwtTokenProvider.generateAccessToken(request.accountId()))
                 .accessExpiredAt(now.plusSeconds(jwtProperties.getAccessExp()))
-                .refreshToken(jwtTokenProvider.generateRefreshToken(request.getAccountId()))
+                .refreshToken(jwtTokenProvider.generateRefreshToken(request.accountId()))
                 .refreshExpiredAt(now.plusSeconds(jwtProperties.getRefreshExp()))
-                .build();
+            .build();
     }
 
 }

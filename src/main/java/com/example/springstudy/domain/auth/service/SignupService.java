@@ -18,14 +18,14 @@ public class SignupService {
 
     @Transactional
     public void signup(AuthRequest request) {
-        if(userRepository.findByAccountId(request.getAccountId()).isPresent())
+        if(userRepository.findByAccountId(request.accountId()).isPresent())
             throw UserExistException.EXCEPTION;
 
         userRepository.save(User.builder()
-                        .accountId(request.getAccountId())
-                        .password(passwordEncoder.encode(request.getPassword()))
-                        .userName(request.getUserName())
-                .build());
+                .accountId(request.accountId())
+                .password(passwordEncoder.encode(request.password()))
+                .userName(request.userName())
+            .build());
     }
 
 }
