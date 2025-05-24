@@ -4,7 +4,6 @@ import com.example.springstudy.domain.feed.presentation.dto.request.FeedRequest;
 import com.example.springstudy.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.ZonedDateTime;
 
