@@ -25,10 +25,10 @@ public class ExceptionFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (CustomException e) {
-            logger.error("Custom exception occurred: ", e);
+            log.error("Custom exception occurred: ", e);
             sendErrorMessage(response, e.getErrorCode());
         } catch (Exception e) {
-            logger.error("Unexpected error occurred: ", e);
+            log.error("Unexpected error occurred: ", e);
             sendErrorMessage(response, ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }
